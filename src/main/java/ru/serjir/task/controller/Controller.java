@@ -24,7 +24,7 @@ public class Controller {
     public ResponseEntity modify(@RequestBody RequestModel requestModel) {
         try {
 
-         MyJson myJson = addNumbers.AddNumers(requestModel);
+         MyJson myJson = addNumbers.addNumers(requestModel);
 
             return ResponseEntity.ok().body(myJson);
 

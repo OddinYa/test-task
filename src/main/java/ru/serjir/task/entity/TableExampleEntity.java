@@ -4,6 +4,7 @@ package ru.serjir.task.entity;
 
 import jakarta.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -30,6 +31,13 @@ public class TableExampleEntity {
    @NonNull
    private MyJson myJson;
 
+   public TableExampleEntity(){
+
+   }
+   public TableExampleEntity(int id,MyJson myJson){
+      this.id = id;
+      this.myJson = myJson;
+   }
 
 
 }

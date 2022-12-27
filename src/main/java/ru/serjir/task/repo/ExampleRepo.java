@@ -9,4 +9,5 @@ import ru.serjir.task.entity.TableExampleEntity;
 
 @Repository
 public interface ExampleRepo extends JpaRepository<TableExampleEntity, Integer> {
+
 }

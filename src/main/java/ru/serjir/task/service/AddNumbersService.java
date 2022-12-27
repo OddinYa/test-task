@@ -1,17 +1,12 @@
 package ru.serjir.task.service;
 
-
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.serjir.task.entity.TableExampleEntity;
 import ru.serjir.task.model.RequestModel;
 import ru.serjir.task.model.pojo.MyJson;
 import ru.serjir.task.repo.ExampleRepo;
-
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -28,18 +23,18 @@ public class AddNumbersService  {
     @Autowired
     private ExampleRepo exampleRepo;
 
-    public MyJson AddNumers(RequestModel requestModel) throws Exception {
+    public MyJson addNumers(RequestModel requestModel) throws Exception {
 
         id = requestModel.getId();
         add = requestModel.getAdd();
 
-        Optional<TableExampleEntity> tableExampleEntity = exampleRepo.findById(id);
+        TableExampleEntity tableExampleEntity = exampleRepo.getReferenceById(id);
 
-        if(tableExampleEntity.get().getId()!=id){
+        if(tableExampleEntity.getId()!=id){
             throw new Exception();
         }
-        atomicLong.set(tableExampleEntity.get().getMyJson().getCurrent());
-        MyJson myJson = tableExampleEntity.get().getMyJson();
+        atomicLong.set(tableExampleEntity.getMyJson().getCurrent());
+        MyJson myJson = tableExampleEntity.getMyJson();
 
         myJson.setCurrent(atomicLong.addAndGet(add));
 
@@ -48,11 +43,11 @@ public class AddNumbersService  {
         return myJson;
     }
 
-    public void upadateJsonb(Optional<TableExampleEntity> tableExampleEntity, MyJson myJson){
+    public void upadateJsonb(TableExampleEntity tableExampleEntity, MyJson myJson){
 
        TableExampleEntity tableExample = new TableExampleEntity();
 
-       tableExample.setId(tableExampleEntity.get().getId());
+       tableExample.setId(tableExampleEntity.getId());
        tableExample.setMyJson(myJson);
        exampleRepo.save(tableExample);
     }
