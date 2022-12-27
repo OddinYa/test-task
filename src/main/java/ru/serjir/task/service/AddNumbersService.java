@@ -3,7 +3,7 @@ package ru.serjir.task.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.NonNull;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.serjir.task.entity.TableExampleEntity;
@@ -12,14 +12,17 @@ import ru.serjir.task.model.pojo.MyJson;
 import ru.serjir.task.repo.ExampleRepo;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 @Service
-public class AddNumbersService {
+public class AddNumbersService  {
 
     private ObjectMapper mapper = new ObjectMapper();
     private int id;
     private long add;
+
+    private static AtomicLong atomicLong = new AtomicLong();
 
 
     @Autowired
@@ -35,10 +38,10 @@ public class AddNumbersService {
         if(tableExampleEntity.get().getId()!=id){
             throw new Exception();
         }
-
+        atomicLong.set(tableExampleEntity.get().getMyJson().getCurrent());
         MyJson myJson = tableExampleEntity.get().getMyJson();
 
-        myJson.setCurrent(myJson.getCurrent()+add);
+        myJson.setCurrent(atomicLong.addAndGet(add));
 
         upadateJsonb(tableExampleEntity,myJson);
 
