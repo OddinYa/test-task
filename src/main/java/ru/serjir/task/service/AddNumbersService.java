@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Service
 public class AddNumbersService  {
 
-    private ObjectMapper mapper = new ObjectMapper();
+   
     private int id;
     private long add;
 
